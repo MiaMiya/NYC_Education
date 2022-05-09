@@ -1,0 +1,93 @@
+Traceback (most recent call last):
+  File "C:\Users\miaha\anaconda3\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
+    executenb(
+  File "C:\Users\miaha\anaconda3\lib\site-packages\nbclient\client.py", line 1112, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\miaha\anaconda3\lib\site-packages\nbclient\util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "C:\Users\miaha\anaconda3\lib\site-packages\nbclient\util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\miaha\anaconda3\lib\asyncio\base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "C:\Users\miaha\anaconda3\lib\site-packages\nbclient\client.py", line 553, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\miaha\anaconda3\lib\site-packages\nbclient\client.py", line 857, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "C:\Users\miaha\anaconda3\lib\site-packages\nbclient\client.py", line 760, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+#### Education 
+#### Salary 
+#### ethnicity 
+
+#X = data[features]
+X_grouped = data.groupby(['Boro']).median()
+gdf = gpd.read_file('https://raw.githubusercontent.com/dwillis/nyc-maps/master/boroughs.geojson')
+gdf.to_crs(epsg=4326, inplace=True)
+gdf.set_index('BoroName', inplace=True)
+gdf['BoroCode'] = [5,4,2,3,1]
+gdf.sort_index(inplace=True)
+X_grouped['BoroName'] = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
+X_grouped.set_index('BoroName',inplace=True)
+att = 'Total_income'
+fig = px.choropleth_mapbox(X_grouped[att].reset_index(), geojson=gdf['geometry'], locations=gdf.index, color='Total_income',
+                           color_continuous_scale="Viridis",
+                           range_color=(X_grouped[att].min(),X_grouped[att].max()),
+                           mapbox_style="carto-positron",
+                           zoom=8.5, center = {"lat": 40.730610, "lon": -73.935242},
+                           opacity=0.5,
+                           labels={'Median total income in borough':att}
+                          )
+px_plot(fig, filename = 'figure_1.html')
+display(HTML('figure_1.html'))
+
+#fig.update_layout(margin={"r":300,"t":100,"l":200,"b":0})
+#fig.show("notebook")
+#fig.show()
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mKeyError[0m                                  Traceback (most recent call last)
+[1;32m~\anaconda3\lib\site-packages\pandas\core\indexes\base.py[0m in [0;36mget_loc[1;34m(self, key, method, tolerance)[0m
+[0;32m   3360[0m             [1;32mtry[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[1;32m-> 3361[1;33m                 [1;32mreturn[0m [0mself[0m[1;33m.[0m[0m_engine[0m[1;33m.[0m[0mget_loc[0m[1;33m([0m[0mcasted_key[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m   3362[0m             [1;32mexcept[0m [0mKeyError[0m [1;32mas[0m [0merr[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m~\anaconda3\lib\site-packages\pandas\_libs\index.pyx[0m in [0;36mpandas._libs.index.IndexEngine.get_loc[1;34m()[0m
+
+[1;32m~\anaconda3\lib\site-packages\pandas\_libs\index.pyx[0m in [0;36mpandas._libs.index.IndexEngine.get_loc[1;34m()[0m
+
+[1;32mpandas\_libs\hashtable_class_helper.pxi[0m in [0;36mpandas._libs.hashtable.PyObjectHashTable.get_item[1;34m()[0m
+
+[1;32mpandas\_libs\hashtable_class_helper.pxi[0m in [0;36mpandas._libs.hashtable.PyObjectHashTable.get_item[1;34m()[0m
+
+[1;31mKeyError[0m: 'Total_income'
+
+The above exception was the direct cause of the following exception:
+
+[1;31mKeyError[0m                                  Traceback (most recent call last)
+[1;32m~\AppData\Local\Temp/ipykernel_2640/2293723536.py[0m in [0;36m<module>[1;34m[0m
+[0;32m     13[0m [0mX_grouped[0m[1;33m.[0m[0mset_index[0m[1;33m([0m[1;34m'BoroName'[0m[1;33m,[0m[0minplace[0m[1;33m=[0m[1;32mTrue[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0;32m     14[0m [0matt[0m [1;33m=[0m [1;34m'Total_income'[0m[1;33m[0m[1;33m[0m[0m
+[1;32m---> 15[1;33m fig = px.choropleth_mapbox(X_grouped[att].reset_index(), geojson=gdf['geometry'], locations=gdf.index, color='Total_income',
+[0m[0;32m     16[0m                            [0mcolor_continuous_scale[0m[1;33m=[0m[1;34m"Viridis"[0m[1;33m,[0m[1;33m[0m[1;33m[0m[0m
+[0;32m     17[0m                            [0mrange_color[0m[1;33m=[0m[1;33m([0m[0mX_grouped[0m[1;33m[[0m[0matt[0m[1;33m][0m[1;33m.[0m[0mmin[0m[1;33m([0m[1;33m)[0m[1;33m,[0m[0mX_grouped[0m[1;33m[[0m[0matt[0m[1;33m][0m[1;33m.[0m[0mmax[0m[1;33m([0m[1;33m)[0m[1;33m)[0m[1;33m,[0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m~\anaconda3\lib\site-packages\pandas\core\frame.py[0m in [0;36m__getitem__[1;34m(self, key)[0m
+[0;32m   3456[0m             [1;32mif[0m [0mself[0m[1;33m.[0m[0mcolumns[0m[1;33m.[0m[0mnlevels[0m [1;33m>[0m [1;36m1[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[0;32m   3457[0m                 [1;32mreturn[0m [0mself[0m[1;33m.[0m[0m_getitem_multilevel[0m[1;33m([0m[0mkey[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[1;32m-> 3458[1;33m             [0mindexer[0m [1;33m=[0m [0mself[0m[1;33m.[0m[0mcolumns[0m[1;33m.[0m[0mget_loc[0m[1;33m([0m[0mkey[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m   3459[0m             [1;32mif[0m [0mis_integer[0m[1;33m([0m[0mindexer[0m[1;33m)[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[0;32m   3460[0m                 [0mindexer[0m [1;33m=[0m [1;33m[[0m[0mindexer[0m[1;33m][0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m~\anaconda3\lib\site-packages\pandas\core\indexes\base.py[0m in [0;36mget_loc[1;34m(self, key, method, tolerance)[0m
+[0;32m   3361[0m                 [1;32mreturn[0m [0mself[0m[1;33m.[0m[0m_engine[0m[1;33m.[0m[0mget_loc[0m[1;33m([0m[0mcasted_key[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0;32m   3362[0m             [1;32mexcept[0m [0mKeyError[0m [1;32mas[0m [0merr[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[1;32m-> 3363[1;33m                 [1;32mraise[0m [0mKeyError[0m[1;33m([0m[0mkey[0m[1;33m)[0m [1;32mfrom[0m [0merr[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m   3364[0m [1;33m[0m[0m
+[0;32m   3365[0m         [1;32mif[0m [0mis_scalar[0m[1;33m([0m[0mkey[0m[1;33m)[0m [1;32mand[0m [0misna[0m[1;33m([0m[0mkey[0m[1;33m)[0m [1;32mand[0m [1;32mnot[0m [0mself[0m[1;33m.[0m[0mhasnans[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+
+[1;31mKeyError[0m: 'Total_income'
+KeyError: 'Total_income'
+
