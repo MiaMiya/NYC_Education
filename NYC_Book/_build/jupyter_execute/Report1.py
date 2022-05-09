@@ -363,7 +363,7 @@ fig = px.choropleth_mapbox(X_grouped[att].reset_index(), geojson=gdf['geometry']
                            labels={att: 'Median total income in borough'}
                           )
 px_plot(fig, filename = 'figure_1.html')
-#display(HTML('figure_1.html'))
+display(HTML('figure_1.html'))
 
 #fig.update_layout(margin={"r":300,"t":100,"l":200,"b":0})
 #fig.show("notebook")
@@ -459,7 +459,7 @@ fig.update_mapboxes(style='carto-positron',
 fig.update_layout(autosize=False, width = 800, height=600)
 #fig.show("notebook")
 px_plot(fig, filename = 'Education.html')
-#display(HTML('Education.html'))
+display(HTML('Education.html'))
 #fig.show()
 
 
@@ -567,6 +567,6 @@ fig.update_mapboxes(style='carto-positron',
 fig.update_layout(autosize=False, width = 800, height=900)
 #fig.show("notebook")
 px_plot(fig, filename = 'Ethnicity_map.html')
-#display(HTML('Ethnicity_map.html'))
+display(HTML('Ethnicity_map.html'))
 #fig.show()
 
