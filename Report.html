@@ -42,6 +42,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -253,11 +255,16 @@
       </a>
      </li>
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#age-and-race">
-       Age and race
+      <a class="reference internal nav-link" href="#ethnicity-and-age">
+       Ethnicity and age
       </a>
      </li>
     </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#borough">
+     Borough
+    </a>
    </li>
   </ul>
  </li>
@@ -283,12 +290,13 @@
 <div class="tex2jax_ignore mathjax_ignore section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <p>“Achieving inclusive and quality education for all reaffirms the belief that education is one of the most powerful and proven vehicles for sustainable development.” - <a class="reference external" href="https://www.undp.org/sustainable-development-goals">UN</a></p>
-<p>It should be the goal of any governing organization to ensure high-quality education for all, as its benefits are high and extensive. From the fact that illiteracy means you have a substantially higher likelihood of ending up in jail or on welfare, that illiteracy has a negative impact on discrimination and preventable diseases, or the fact that for every dollar spent on adult illiteracy the ROI is 6.14$ (614%). Another extremely important effect of education is the social network you get, which combats loneliness which in itself has an array of negative health impacts <a class="reference external" href="https://www.hrsa.gov/enews/past-issues/2019/january-17/loneliness-epidemic">2</a>.<br />
+<p>It should be the goal of any governing organization to ensure high-quality education for all, as its benefits are high and extensive. From the fact that illiteracy means you have a substantially higher likelihood of ending up in jail or on welfare, that illiteracy has a negative impact on discrimination and preventable diseases, or the fact that for every dollar spent on adult illiteracy the ROI is 6.14$ (614%). Another extremely important effect of education is the social network you get, which combats loneliness which in itself has an array of negative health impacts [<a class="reference external" href="https://www.hrsa.gov/enews/past-issues/2019/january-17/loneliness-epidemic">1</a>].<br />
 Given that there is no doubt about the importance of education it’s important to investigate when the educational system fails and people drop out ?!?Nyt ord!?!, and which factors have an impact on the dropout?!?Nyt ord!?!. To investigate this we’ll look at poverty data from New York City in 2015 ?!?!?!?!?!?.</p>
 <div class="section" id="the-data">
 <h2>The Data<a class="headerlink" href="#the-data" title="Permalink to this headline">¶</a></h2>
 <p>The data can be obtained from <a class="reference external" href="https://data.cityofnewyork.us/City-Government/NYCgov-Poverty-Measure-Data-2015-/ahcp-vck8">data.cityofnewyork</a>.<br />
 It contains 69103 observations and 61 columns of which we only use a subset of ?!?!?! columns:</p>
+<p>The data is generated annually by a research unit in the Mayor’s office. It is derived from the American Community Survey Public Use Microsample for NYC.</p>
 <div class="section" id="exploratory-data-analysis">
 <h3>Exploratory Data analysis<a class="headerlink" href="#exploratory-data-analysis" title="Permalink to this headline">¶</a></h3>
 </div>
@@ -298,183 +306,74 @@ It contains 69103 observations and 61 columns of which we only use a subset of ?
 </div>
 <div class="section" id="salary">
 <h2>Salary<a class="headerlink" href="#salary" title="Permalink to this headline">¶</a></h2>
-<p>An obvious attribute that we would expect education to have an impact on is income. It is intuitive that better education leads to better and more well-paid jobs, so let’s investigate this claim. We’ll do this by looking at the distribution of income created from the combined !=”!=”#€)!”=€)!=”€) attributes:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">figure</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
-</pre></div>
+<p>An obvious attribute that we would expect education to have an impact on is income. It is intuitive that more education leads to better and more well-paid jobs, so let’s investigate this claim. We’ll do this by looking at the distribution of self made income (meaning no wellfare) created from the combined attributes:</p>
+<ul class="simple">
+<li><p>Interest, dividends, and net rental income</p></li>
+<li><p>Self-employment income</p></li>
+<li><p>Wages or salary income</p></li>
+<li><p>Retirement income</p></li>
+</ul>
+<div class="cell tag_remove-input docutils container">
 </div>
+<div class="cell tag_remove-input docutils container">
 </div>
+<div class="cell tag_remove-input docutils container">
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;NYCgov_Poverty_Measure_Data__2015_.csv&quot;</span><span class="p">)</span>
-
-<span class="c1"># Adding column for age-group</span>
-<span class="n">bins</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">110</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">10</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;]&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-<span class="n">labels</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;100]&quot;</span><span class="p">,</span> <span class="s2">&quot;inf)&quot;</span><span class="p">)</span>
-<span class="n">data</span><span class="p">[</span><span class="s1">&#39;AgeGroup&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;AGEP&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># Create dataframe with only adults (finished school)</span>
-<span class="n">data_adult</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;AGEP&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">24</span><span class="p">]</span>
-
-<span class="c1"># Mapping of different columns </span>
-<span class="n">EducAttain_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;less than High School&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s1">&#39;High School Degree&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="s1">&#39;Some College&#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="s1">&#39;Bachelors Degree or higher&#39;</span><span class="p">}</span>
-<span class="n">SEX_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Male&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;Female&#39;</span><span class="p">}</span>
-<span class="n">Boro_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;Bronx&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;Brooklyn&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="s1">&#39;Manhattan&#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="s1">&#39;Queens&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">:</span><span class="s1">&#39;Staten Island&#39;</span><span class="p">}</span>
-<span class="n">Off_Pov_Stat_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;In Poverty&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s1">&#39;Not in Poverty&#39;</span><span class="p">}</span>
-<span class="n">Ethnicity_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;Non-Hispanic White&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s1">&#39;Non-Hispanic Black&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="s1">&#39;Non-Hispanic Asian&#39;</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">:</span><span class="s1">&#39;Hispanic, Any Race&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">:</span><span class="s1">&#39;Other Race/Ethnic Group&#39;</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Deinfe functions for finding bin size</span>
-<span class="k">def</span> <span class="nf">bins_sturges</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
-
-<span class="k">def</span> <span class="nf">bins_freedamn_diaconis</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="n">q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)</span>
-    <span class="n">q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
-    <span class="n">b_w</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">q3</span><span class="o">-</span><span class="n">q1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cbrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
-    <span class="k">if</span> <span class="n">b_w</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
-        <span class="n">b_w</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">))</span><span class="o">/</span><span class="n">b_w</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">bins</span> 
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp_col</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;INTP_adj&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;SEMP_adj&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;WAGP_adj&#39;</span><span class="p">]</span> <span class="o">+</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;RETP_adj&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">1000</span>
-<span class="n">data_adult</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Total_income&quot;</span><span class="p">,</span> <span class="n">temp_col</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-
-
-<span class="c1">## Plot</span>
-<span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
-<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;EducAttain&#39;</span><span class="p">])):</span> 
-    <span class="n">data_boro</span> <span class="o">=</span> <span class="n">data_adult</span><span class="p">[</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;EducAttain&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dist</span><span class="p">]</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_boro</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Total_income&quot;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">bins_freedamn_diaconis</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Average &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;Median &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;Max &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">EducAttain_map</span><span class="p">[</span><span class="n">dist</span><span class="p">]],</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">borderaxespad</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">*</span><span class="mf">1.10</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Annual income in thousand dollars&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
-    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Distribution of total self made income in each borough in thousand pr. year&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.96</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
+<div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <img alt="_images/Report_10_0.png" src="_images/Report_10_0.png" />
 </div>
 </div>
-<p>What we see is indeed that you can expect a higher salary given you’ve attained a higher education level. This can be seen in both mean, median, and max income. Thus it’s easy to conclude that education is an effective tool against poverty, however, it’s important to note that we know nothing of the jobs that people occupy, so a higher salary does not necessarily mean a job that is a “vehicle for sustainable development”.</p>
+<p>Interestingly, the individual with second highest income is (the max line in <span class="math notranslate nohighlight">\(\color{green}{\text{green}}\)</span>) without a high school diploma ie. more than both people with a high scool degree and some college. What this means is just that a high salary/income can be obtained without having any education and not that you can espect a lower maximum income if you have some college education. In fact what we see is indeed that you can expect a higher salary the higher your education level. This can be seen in both the average (<span class="math notranslate nohighlight">\(\color{red}{\text{red line}}\)</span>), and median (<span class="math notranslate nohighlight">\(\color{yellow}{\text{yellow line}}\)</span>). Thus it’s easy to conclude that education is an effective tool against poverty. However, it’s important to note that we know nothing of the jobs that people occupy, so a higher salary does not necessarily mean a job that is a “vehicle for sustainable development”.</p>
 </div>
 <div class="section" id="sex-a-hopeful-story">
 <h2>Sex a hopeful story<a class="headerlink" href="#sex-a-hopeful-story" title="Permalink to this headline">¶</a></h2>
-<p>SDG 4 says: “Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all” <a class="reference external" href="https://sdgs.un.org/goals/goal4">3</a> this unsurprisingly also includes women. Worldwide we know there is a discrepancy between males and females from Hans Rosling’s quiz in the opening of his famous book Factfullness: “Worldwide, 30-year-old men have spent 10 years in school, on average. How many years have women of the same age spent in school?” the answer is 9 years <a class="reference external" href="https://factfulnessquiz.com">4</a>. This number is of course or US or NYC specific, thus let’s take a look:</p>
+<p>SDG 4 says: “Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all” [<a class="reference external" href="https://sdgs.un.org/goals/goal4">2</a>] this unsurprisingly also includes women. Worldwide we know there is a discrepancy between males and females from Hans Rosling’s quiz in the opening of his famous book Factfullness: “Worldwide, 30-year-old men have spent 10 years in school, on average. How many years have women of the same age spent in school?” the answer is 9 years [<a class="reference external" href="https://factfulnessquiz.com">3</a>]. This number is of course or US or NYC specific, thus let’s take a look:</p>
 <p>It’s fairly clear that there is no difference in education obtained between the sexes, however, let’s also see if this holds true by race:</p>
 <div class="section" id="race-and-sex">
 <h3>Race and Sex<a class="headerlink" href="#race-and-sex" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="salary-and-sex-a-sad-story">
 <h3>Salary and Sex a sad story<a class="headerlink" href="#salary-and-sex-a-sad-story" title="Permalink to this headline">¶</a></h3>
-<p>Although the equality of education between the sexes is a good sign, it’s an entirely different and alarming story when looking at Sex and salary:
-porjasporjaspiorjaspojrpoasjrfpoasjfpojaposajfpjasgihsdigasohisjg
-Here we have a fairly big discrepancy. This is very alarming as it contradicts our previous conclusion: that higher education means a higher salary and thus an effective tool against poverty. The two plots above suggest that although females have an equal amount of education as men, they still have a lower average salary, and thus a higher likelihood of being in poverty. Now you might think that this could be explained by “Stay-at-home-momes” but there is a difference in salary between men and women 120+4i12+0i4+012+04912+09. Thus it would be interesting to investigate the effect of <strong>Sex</strong> on poverty.<br />
-!!!???? Should we remove the 0’s !!!?????</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_adult</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;AGEP&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">24</span><span class="p">]</span>
-<span class="n">temp_col</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;INTP_adj&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;SEMP_adj&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;WAGP_adj&#39;</span><span class="p">]</span> <span class="o">+</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;RETP_adj&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">1000</span>
-<span class="n">data_adult</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Total_income&quot;</span><span class="p">,</span> <span class="n">temp_col</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-
-<span class="n">data_above</span> <span class="o">=</span> <span class="n">data_adult</span><span class="p">[</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
-
-<span class="c1">## Plot</span>
-<span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
-<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;SEX&#39;</span><span class="p">])):</span> 
-    <span class="c1">#data_boro = data_adult[data_adult[&#39;SEX&#39;] == dist]</span>
-    <span class="n">data_boro</span> <span class="o">=</span> <span class="n">data_above</span><span class="p">[</span><span class="n">data_above</span><span class="p">[</span><span class="s1">&#39;SEX&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dist</span><span class="p">]</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_boro</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Total_income&quot;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">bins_freedamn_diaconis</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Average &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;Median &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;Max &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">data_boro</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">borderaxespad</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">data_adult</span><span class="p">[</span><span class="s1">&#39;Total_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">*</span><span class="mf">1.10</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Annual income in thousand dollars for &#39;</span> <span class="o">+</span> <span class="n">SEX_map</span><span class="p">[</span><span class="n">dist</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
-    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Distribution of total self made income for the two genders in thousand pr. year&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.96</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
+<p>Although the equality of education between the sexes is a good sign, it’s an entirely different and alarming story when looking at sex and salary:</p>
+<div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="_images/Report_13_0.png" src="_images/Report_13_0.png" />
+<img alt="_images/Report_14_0.png" src="_images/Report_14_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="age-and-race">
-<h3>Age and race<a class="headerlink" href="#age-and-race" title="Permalink to this headline">¶</a></h3>
-<p>Looking at education we would expect it to be higher the lower the age (age &gt; 24). Generally, we expect people to be more educated now than 40 years ago. Additionally, the American society is generally less segregated, especially compared to say the 60s, thus we would expect to see a greater increase in education for all other races.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_city_health</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_adult</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;EducAttain&#39;</span><span class="p">,</span><span class="s1">&#39;Ethnicity&#39;</span><span class="p">])[</span><span class="s1">&#39;SERIALNO&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">())</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-<span class="n">df_city_health</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;SERIALNO&#39;</span><span class="p">:</span> <span class="s1">&#39;Count&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">df_city_health</span><span class="p">[</span><span class="s1">&#39;EducAttain&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="s1">&#39;less than High School&#39;</span><span class="p">,</span><span class="s1">&#39;High School Degree&#39;</span><span class="p">,</span><span class="s1">&#39;Some College&#39;</span><span class="p">,</span><span class="s1">&#39;Bachelors Degree or higher&#39;</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">eth</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">Ethnicity_map</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span> 
-    <span class="n">df_city_health</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df_city_health</span><span class="p">[</span><span class="s1">&#39;Ethnicity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">eth</span><span class="p">)</span> <span class="p">,</span> <span class="s1">&#39;Count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_city_health</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df_city_health</span><span class="p">[</span><span class="s1">&#39;Ethnicity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">eth</span><span class="p">)</span>  <span class="p">,</span> <span class="s1">&#39;Count&#39;</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">df_city_health</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_city_health</span><span class="p">[</span><span class="s1">&#39;Ethnicity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">eth</span><span class="p">,</span> <span class="s1">&#39;Count&#39;</span><span class="p">]))</span>
-
-<span class="c1">## Plot</span>
-<span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
-<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df_city_health</span><span class="p">[</span><span class="s1">&#39;Ethnicity&#39;</span><span class="p">])):</span> 
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;EducAttain&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df_city_health</span><span class="p">[</span><span class="n">df_city_health</span><span class="o">.</span><span class="n">Ethnicity</span> <span class="o">==</span> <span class="n">dist</span><span class="p">],</span><span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Blues_d&quot;</span><span class="p">)</span>
-    <span class="c1">#plt.legend(labels=[Education_map[dist],&#39;Male&#39;, &#39;Female&#39;])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Percentage attained&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="n">Ethnicity_map</span><span class="p">[</span><span class="n">dist</span><span class="p">]])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Education obtained in the different ethnicities&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.96</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
+<p>Here we have a fairly big discrepancy as both the <span class="math notranslate nohighlight">\(\color{red}{\text{average}}\)</span> and <span class="math notranslate nohighlight">\(\color{yellow}{\text{median}}\)</span> is significantly higher for males (about 70%). This is very alarming as it contradicts our previous conclusion: that higher education means a higher salary and thus an effective tool against poverty. The two figures above suggest that although females have an equal amount of education as men, they still have a lower average salary, and thus a higher likelihood of being in poverty. Now you might think that this low salary could be explained by “Stay-at-home-momes” but there is a difference in salary between men and women even when removing instances of people not earning any money:</p>
+<div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="_images/Report_15_0.png" src="_images/Report_15_0.png" />
+<img alt="_images/Report_16_0.png" src="_images/Report_16_0.png" />
 </div>
 </div>
+<p>The difference is still significant (about 35%). And even if the the entire difference could be explained by stay-at-home-momes, there is still a question if it should be the case, as this is gender inequality no matter if it is voluntary or not.</p>
 </div>
+<div class="section" id="ethnicity-and-age">
+<h3>Ethnicity and age<a class="headerlink" href="#ethnicity-and-age" title="Permalink to this headline">¶</a></h3>
+<p>NYC is a multicultural city with people coming from all ethnicities, does all of them get the same opportunities for educations?</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/Report_19_0.png" src="_images/Report_19_0.png" />
+</div>
+</div>
+<p>We do see that for white, Asian, and other over 50% have a higher education, whereas majority of the Hispanic in our dataset have less than high school education which is beneath <a class="reference external" href="https://sdgs.un.org/goals/goal4">SDG 4.1</a>. But could this be a historical issue and no longer be the case? Looking at the general education we would expect it to be higher the lower the age (age &gt; 24), since the focus on education and resource helping people to get an education has changed dramatically. Additionally, the American society is generally less segregated, especially compared to say the 60s, thus we would expect to see a greater increase in education for all other races.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/Report_21_0.png" src="_images/Report_21_0.png" />
+</div>
+</div>
+<p>The Hispanic race seems to be having the most trouble with obtaining an education even for the younger generation of 25-35 where there are still some where high school education is the most frequent. This may be troublesome for many increasing importance of a college degree steady increasing <a class="reference external" href="https://www.ncbi.nlm.nih.gov/books/NBK19909/#:~:text=Despite%20high%20educational%20expectations%2C%20Hispanics,(U.S.%20Census%20Bureau%2C%202003)">[5]</a>. But alike our theory the younger generation is having a higher education which is a result of the increase focus in education.</p>
+</div>
+</div>
+<div class="section" id="borough">
+<h2>Borough<a class="headerlink" href="#borough" title="Permalink to this headline">¶</a></h2>
+<p>New York City is divied into five different bourgh each with it’s own flavor <a class="reference external" href="https://www.britannica.com/place/New-York-City/The-boroughs">[11]</a>:<br />
+<strong>Bronx</strong> one of the most prominent centres of urban poverty in the United States.
+<strong>Brooklyn</strong> Collision of old and new<br />
+<strong>Manhattan</strong> center of NYC and the representative of NYC with central Park, Broadway show and Times Square<br />
+<strong>Queens</strong> primiary middel-class families and the most ethnically varied of all the boroughs<br />
+<strong>Staten Island</strong> The most rural part of the city</p>
 </div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="creating-a-predictive-model-that-should-be-bad-a-predictor-but-isn-t">
