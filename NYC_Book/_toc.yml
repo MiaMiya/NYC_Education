@@ -6,3 +6,5 @@ root: Report1.ipynb
 sections:
 - file: Report3.ipynb 
 - file: Report2.ipynb
+- url: https://nbviewer.org/github/MiaMiya/NYC_Education/blob/main/explainer.ipynb
+  title: explainer notebook

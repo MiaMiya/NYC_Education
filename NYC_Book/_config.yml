@@ -23,7 +23,6 @@ parse:
     # including those that are enabled by default!
     - amsmath
     - dollarmath
-    - color
 
 
 # Information about where the book exists on the web
