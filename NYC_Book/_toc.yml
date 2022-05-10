@@ -3,5 +3,6 @@
 
 format: jb-article
 root: Report1.ipynb
-sections: 
+sections:
+- file: Report3.ipynb 
 - file: Report2.ipynb
