@@ -98,7 +98,7 @@ def bins_freedamn_diaconis(data):
 # It should be the goal of any governing organization to ensure high-quality education for all, as its benefits are high and extensive. From the fact that illiteracy means you have a substantially higher likelihood of ending up in jail or on welfare, that illiteracy has a negative impact on discrimination and preventable diseases, or the fact that for every dollar spent on adult illiteracy the ROI (return on investment) is 6.14$ (614%). Another extremely important effect of education is the social network you get, which combats loneliness which in itself has several negative health impacts [[1]].  
 # Given that there is no doubt about the importance of education it's important to investigate when the educational system fails and people drop out, and which factors have an impact on the dropout. To investigate this we'll look at poverty data from New York City in 2015, where we focus on education, since this is one of the 17 SDGs, and education is important for developing our world in a sustainable direction. 
 # 
-# If you want to look behind the scene we have our **explainer notebook** [here](https://nbviewer.org/github/MiaMiya/NYC_Education/blob/main/explainer.ipynb).
+# If you want to look behind the scene we have our **explainer notebook** [here](https://nbviewer.org/github/MiaMiya/NYC_Education/blob/main/Explainer_notebook.ipynb) or our github repository [here](https://github.com/MiaMiya/NYC_Education).
 # 
 # [1]: https://www.hrsa.gov/enews/past-issues/2019/january-17/loneliness-epidemic
 
