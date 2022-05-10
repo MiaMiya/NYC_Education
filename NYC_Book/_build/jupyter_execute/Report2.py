@@ -353,38 +353,18 @@ roc_HI = roc_curve(y_test_HI,y_probs_HI,ths)
 roc_CA = roc_curve(y_test_CA,y_probs_CA,ths)
 roc_AA = roc_curve(y_test_AA,y_probs_AA,ths)
 
-df_roc = pd.DataFrame({'FPR_HI':roc_HI[:,1],'TPR_HI':roc_HI[:,2], 'FPR_CA': roc_CA[:,1], 'TPR_CA': roc_CA[:,2], 
-'FPR_AA': roc_AA[:,1], 'TPR_AA': roc_AA[:,2], 'ths_CA': roc_CA[:,0],'ths_HI': roc_HI[:,0], 'ths_AA': roc_AA[:,0] })
-CDS_data = ColumnDataSource(data=df_roc)
-
 # Choose a title
 title = 'RUC curve for education predictions for ethnicities'
+df_roc = pd.DataFrame({'FPR': np.round(np.concatenate([roc_HI[:,1],roc_CA[:,1],roc_AA[:,1]]),3), 
+                        'TPR': np.round(np.concatenate([roc_HI[:,2],roc_CA[:,2],roc_AA[:,2]]),3),
+                        'Ths': np.round(np.concatenate([roc_HI[:,0],roc_CA[:,0],roc_AA[:,0]]),3), 
+                        'Ethnicity': np.concatenate([np.repeat('Hispanic, Any Race', 20),np.repeat('Non-Hispanic White', 20),np.repeat('Non-Hispanic Black', 20)])})
 
-# Create a plot — set dimensions, toolbar, and title
-HOVER_TOOLTIPS = [
-        ('Threshold_CA', '@ths_CA'),
-        ('Threshold_HI', '@ths_HI'),
-        ('Threshold_AA', '@ths_AA')
-]
-
-
-p = b_figure(tooltips = HOVER_TOOLTIPS,
-    tools="pan,wheel_zoom,save,reset", active_scroll='wheel_zoom',
-            title=title,
-            x_axis_label = "FPR", 
-            y_axis_label = "TPR")
-
-p.line(x="FPR_HI", y="TPR_HI", line_width=2, source=CDS_data, color ='red', legend_label='Hispanic')
-p.line(x="FPR_CA", y="TPR_CA", line_width=2, source=CDS_data, color = 'green', legend_label = 'Caucasian')
-p.line(x="FPR_AA", y="TPR_AA", line_width=2, source=CDS_data, color = 'blue', legend_label = 'African American')
-
-p.circle(x="FPR_HI", y="TPR_HI", radius=0.01, alpha=0.75, source=CDS_data,color ='red')
-p.circle(x="FPR_CA", y="TPR_CA", radius=0.01, alpha=0.75, source=CDS_data,color = 'green')
-p.circle(x="FPR_AA", y="TPR_AA", radius=0.01, alpha=0.75, source=CDS_data,color = 'blue')
-
-p.legend.location = "right"
-
-show(p)
+fig = px.line(df_roc, x="FPR", y="TPR",color='Ethnicity', hover_data=["Ths"],
+                title = title,markers=True, width = 800, height = 600)
+fig.update_traces(textposition="bottom right")
+px_plot(fig, filename = 'RUC.html')
+display(HTML('RUC.html'))
 
 # TPR and FPR with new thresholds
 y_hat_HI_th = y_hat_th(y_probs_HI,0.421)

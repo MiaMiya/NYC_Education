@@ -90,6 +90,95 @@ def bins_freedamn_diaconis(data):
     return bins 
 
 
+# In[4]:
+
+
+## Heatmap for distribution of education level in different boroughs
+gdf = gpd.read_file('https://raw.githubusercontent.com/dwillis/nyc-maps/master/boroughs.geojson')
+gdf.to_crs(epsg=4326, inplace=True)
+gdf.set_index('BoroName', inplace=True)
+gdf['BoroCode'] = [5,4,2,3,1]
+gdf.sort_index(inplace=True)
+# Making subplots for each education level
+fig = make_subplots(rows=2, cols=2,
+                    subplot_titles=list(EducAttain_map.values()),
+                    specs=[[{'type':"mapbox"}, {'type':"mapbox"}],[{'type':"mapbox"}, {'type':"mapbox"}]],
+                    horizontal_spacing= 0.05,
+                    vertical_spacing=0.08) 
+list_edu = list(EducAttain_map.keys())
+# Subplot of less than highschool 
+i = list_edu[0]
+X_grouped = round(data_adult[data_adult['EducAttain'] == i].groupby(['Boro']).count()/data_adult.groupby(['Boro']).count(),2)*100
+X_grouped['BoroName'] = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
+X_grouped.set_index('BoroName',inplace=True)
+att = 'Total_income'
+label_text = 'Percentage of ' +  EducAttain_map[i] + ':'
+fig1 = px.choropleth_mapbox(X_grouped[att].reset_index(), geojson=gdf['geometry'], locations=gdf.index, color='Total_income',
+                        color_continuous_scale="Viridis",
+                        range_color=(X_grouped[att].min(),X_grouped[att].max()),
+                        mapbox_style="carto-positron",
+                        zoom=8.5, center = {"lat": 40.730610, "lon": -73.935242},
+                        opacity=0.5,
+                        labels={att: label_text}
+                        )
+# Subplot of highschool 
+i = list_edu[1]
+X_grouped = round(data_adult[data_adult['EducAttain'] == i].groupby(['Boro']).count()/data_adult.groupby(['Boro']).count(),2)*100
+X_grouped['BoroName'] = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
+X_grouped.set_index('BoroName',inplace=True)
+att = 'Total_income'
+label_text = 'Percentage of ' +  EducAttain_map[i] + ':'
+fig2 = px.choropleth_mapbox(X_grouped[att].reset_index(), geojson=gdf['geometry'], locations=gdf.index, color='Total_income',
+                        color_continuous_scale="Viridis",
+                        range_color=(X_grouped[att].min(),X_grouped[att].max()),
+                        mapbox_style="carto-positron",
+                        zoom=8.5, center = {"lat": 40.730610, "lon": -73.935242},
+                        opacity=0.5,
+                        labels={att:label_text}
+                        )
+# Subplot of some college 
+i = list_edu[2]
+X_grouped = round(data_adult[data_adult['EducAttain'] == i].groupby(['Boro']).count()/data_adult.groupby(['Boro']).count(),2)*100
+X_grouped['BoroName'] = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
+X_grouped.set_index('BoroName',inplace=True)
+att = 'Total_income'
+label_text = 'Percentage of ' +  EducAttain_map[i] + ':'
+fig3 = px.choropleth_mapbox(X_grouped[att].reset_index(), geojson=gdf['geometry'], locations=gdf.index, color='Total_income',
+                        color_continuous_scale="Viridis",
+                        range_color=(X_grouped[att].min(),X_grouped[att].max()),
+                        mapbox_style="carto-positron",
+                        zoom=8.5, center = {"lat": 40.730610, "lon": -73.935242},
+                        opacity=0.5,
+                        labels={att:label_text}
+                        )
+# Subplot of bachelor's or higher
+i = list_edu[3]
+X_grouped = round(data_adult[data_adult['EducAttain'] == i].groupby(['Boro']).count()/data_adult.groupby(['Boro']).count(),2)*100
+X_grouped['BoroName'] = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
+X_grouped.set_index('BoroName',inplace=True)
+att = 'Total_income'
+label_text = 'Percentage of ' +  EducAttain_map[i] + ':'
+fig4 = px.choropleth_mapbox(X_grouped[att].reset_index(), geojson=gdf['geometry'], locations=gdf.index, color='Total_income',
+                        color_continuous_scale="Viridis",
+                        range_color=(X_grouped[att].min(),X_grouped[att].max()),
+                        mapbox_style="carto-positron",
+                        zoom=8.5, center = {"lat": 40.730610, "lon": -73.935242},
+                        opacity=0.5,
+                        labels={att:label_text}
+                        )
+# Layout and show heatmaps
+fig.add_trace(fig1['data'][0], row=1, col=1)
+fig.add_trace(fig2['data'][0], row=1, col=2)
+fig.add_trace(fig3['data'][0], row=2, col=1)
+fig.add_trace(fig4['data'][0], row=2, col=2)
+fig.update_mapboxes(style='carto-positron',
+                    zoom=7.5, center = {"lat": 40.730610, "lon": -73.935242})
+fig.update_layout(autosize=False, width = 800, height=600, title_text='Distribution of education level for each borough', title_x=0.5)
+fig.layout.coloraxis.colorbar.title = '%'
+px_plot(fig, filename = 'Education.html')
+display(HTML('Education.html'))
+
+
 # Sadly this is exactly what we see. Clearly, wealth and education are centered in Manhattan, with about two-thirds having a bachelor's or higher, while it's only about a third in Brooklyn, Staten Island, and Queens. What's worse is when looking at the Bronx, here people with less than high school maintain the highest share of the different education categories. Where this starts to become a big problem is the effect that parents' level of education has on their children. Parents with a lower level of education mean that their children have a much lower likelihood of obtaining a higher level of education [[8]]. This means that boroughs are effectively a positive feedback loop, where well-educated parents produce well-educated children, which gives a higher income making Manhattan even more expensive and so on. Thus boroughs can fuel the discrepancy in NYC. 
 # 
 # 
@@ -98,15 +187,10 @@ def bins_freedamn_diaconis(data):
 
 # Finally, let's see how the different ethnicities are situated in NYC. Below we plot what percentage of an ethnicity is situated in a given borough.
 
-# In[4]:
+# In[5]:
 
 
 ## Heatmap for distribution of ethnicities in different boroughs
-gdf = gpd.read_file('https://raw.githubusercontent.com/dwillis/nyc-maps/master/boroughs.geojson')
-gdf.to_crs(epsg=4326, inplace=True)
-gdf.set_index('BoroName', inplace=True)
-gdf['BoroCode'] = [5,4,2,3,1]
-gdf.sort_index(inplace=True)
 # Making subplots for each ethnicity
 fig = make_subplots(rows=3, cols=2,
                     subplot_titles=list(Ethnicity_map.values()),
